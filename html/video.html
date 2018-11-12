@@ -1,0 +1,485 @@
+<!-- html5 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!-- 页面显示适应移动设备-->
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+        <title>We Study</title>
+        <link rel="stylesheet" href="resources\we-vue\style.css">
+        <link rel="stylesheet" href="resources\css\font-awesome.min.css">  
+
+
+        <style>
+        .my-container{
+            width: 100%;
+            height: 100%;
+            background-color:rgb(245, 237, 163);
+        }
+        .good{
+            position: absolute;
+            margin-top: 30px;
+            margin-left: 51px;
+        }
+        .collect{
+            position: absolute;
+            margin-top: 30px;
+            margin-left: 132px;
+        }
+        .comment{
+            position: absolute;
+            margin-top: 30px;
+            margin-left:213px;
+        }
+        .apply{
+            position: absolute;
+            margin-top: 30px;
+            margin-left:294px;
+        }
+
+        .good1{
+            position: absolute;
+            font-size: 15px;
+            margin-top: 60px;
+            margin-left: 51px;
+        }
+        .collect1{
+            position: absolute;
+            font-size: 15px;
+            margin-top: 60px;
+            margin-left: 132px;
+        }
+        .comment1{
+            position: absolute;
+            font-size: 15px;
+            margin-top: 60px;
+            margin-left:213px;
+        }
+        .apply1{
+            position: absolute;
+            font-size: 15px;
+            margin-top: 60px;
+            margin-left:294px;
+        }
+
+        /*评论框*/
+/*
+        .commentguest{
+	width: 300px;
+	height: 20px;
+	top: 22px;
+	position: relative;
+}
+
+.commentguest{
+	width:20px;
+	height: 20px;
+}*/
+.comment-input{
+        transition: all 0.5s ease 0s;
+        font-family: "微软雅黑";
+        font-size: 11px;
+        position: relative;
+        left: 45px;
+}
+
+.commentarea{
+	position:absolute; 
+	padding: 6px 10px;
+	border: 2px solid #e6b30b;
+	background:rgb(252, 251, 202);
+	width:300px;
+	z-index: 2; 
+}
+
+.commentarea textarea{
+	border: 0 none;
+    display: block;
+    outline: 0 none;
+    resize: none;
+    width:280px;
+    height: 20px;
+}
+
+.comment-input:hover .commentarea{
+	height: 114px;
+}
+.comment-input:hover .commentarea textarea{
+    height:70px;
+}
+.comment-input:hover .commentbtn{
+	top:60px;
+	z-index: 3;
+}
+.comment-input:hover .cancelbtn{
+	top:27.2px;
+	z-index: 3;
+}
+.commentbtn{
+	border: 0 none;
+    bottom: 17.3px;
+    height: 31.4px;
+    /*padding: 0;
+    left: 1px;*/
+    width:322px;
+    position: relative;
+    transition:top 0.1s ease 0s;
+}
+
+.cancelbtn{
+    border: 0 none;
+    bottom: 48.4px;
+    height: 31.5px;
+   /* padding: 0;
+    left: 1px;*/
+    width:251px;
+    position:relative;
+    transition:top 0.1s ease 0s;
+}
+
+
+.commentmask{
+    border: 0 none;
+    top:20px;
+    height: 100%;
+    width: 10px;
+    margin-left: 40px;
+    padding: 0;
+    right: 20px;
+    width:10px;
+    background-color:rgb(252, 251, 202);
+    position: relative;
+    z-index: 1;
+}
+
+
+
+.getcomment{
+	width:60px;
+	float: right;
+	bottom: 12px;
+	position: relative;
+	width:67px;
+	height: 100%;
+	z-index:3;
+	/*background-color:#3f404c;*/
+	color: rgb(252, 251, 202);
+	line-height: 19px;
+	text-align: center;
+	font-size: 11px;
+}
+
+.getcomment:hover{
+	/*background-color: #AC2925;*/
+	color: rgb(252, 251, 202);
+}
+
+
+        /*元素选择器*/
+        html{
+            height: 100%;
+        }
+
+        body{
+            height: 100%;
+            padding: 0px;/*内边距*/
+            margin: 0px;/*外边距*/
+        }
+        </style>
+        
+        
+    </head>
+
+
+     <body>
+         <!-- 矩形区域 -->
+        <div id="video" class="my-container">
+        
+            <!--标题-->
+            <wv-header title="We Study" :fixed="false" style="text-align:center;background-color:rgb(233, 176, 53);font-weight:bold;">
+                <div slot="left">
+                    <img @click="back" src="../image/back.png" height="30" width="30" />
+                </div>
+            </wv-header>
+
+            <!--插入视频处-->
+            <div style="margin-top: 25px;text-align:center;">
+           		<video :src="curVideoPath" controls = "control" width=100%></video>
+            </div>
+
+            <!--图标-->
+            <div class="good">
+                <img @click="ChangeLike" src="../image/good.png" height="25" width="30" />
+            </div>
+            <div class="collect">
+                <img @click="collect" src="../image/collect.png" height="25" width="30" />
+            </div>
+            <div class="comment">
+                <img @click="commentfuc1" src="../image/comment.png"  height="25" width="30" />
+            </div>
+            <div class="apply">
+                <img @click="ChangeChoose" src="../image/apply.png"  height="25" width="30" />
+            </div>
+
+            <!--文字-->
+            <div class="good1" >
+                <span>点赞</span>
+            </div>
+            <div class="collect1">
+                <span>收藏</span>
+            </div>
+            <div class="comment1" >
+                <span>评论</span>
+            </div>
+            <div class="apply1" >
+                <span>报名</span>
+            </div>
+
+            <!--评论框-->
+            <div v-show="comment==1" style="margin-top:90px;">
+
+                <div class="commentguest">
+                    <img src="../image/ID.png" style="margin-left:10px;width:30px;height: 30px;top:35px;position: relative;">
+                </div>
+            
+                <div id="comment-input" class="comment-input">
+                    <div class="commentarea">
+                        <textarea id="content" rows="6" cols="80" onpropertychange="if(this.scrollHeight> 80)this.style.posHeight=this.scrollHeight+5"
+                            placeholder="请写下您的评论"></textarea>
+                    </div>
+                    <div class="commentbtn">
+                        <div class="commentmask"></div>
+                        <a href="javascript:;" class="getcomment btn btn-block" style="background-color:rgb(233, 176, 53)" role="button" @click="commentsub">评论</a>
+                    </div>
+                    <div class="cancelbtn" v-show="cancel==1">
+                        <div class="commentmask"></div>
+                        <a href="javascript:;" class="getcomment btn btn-block" style="background-color:#cfc7a4" role="button" @click="cancel2">取消</a>
+                    </div>
+                </div>
+            </div>
+            <wv-panel style="background-color:rgb(245, 237, 163);margin-top:95px;">
+            	<wv-media-box v-for="(item, index) in currentClassComments" @click="ChooseUser(index)" v-bind:title="item.usercomment" v-bind:description="item.username" ></wv-media-box>
+            </wv-panel>
+
+
+        </div>
+
+     </body>
+
+     <script src="resources\js\vue.min.js"></script>
+     <script src="resources\js\jquery.min.js"></script>
+     <script src="resources\we-vue\index.js"></script>
+     <script src="resources\layer_mobile\layer.js"></script>
+     <script src="resources\js\my.js"></script>
+<script>
+    //Vue对象的作用就是渲染界面,需要绑定一个元素
+    new Vue({
+        el: '#video',
+        data:
+        {
+            emp: {
+            	targetUserId:'',
+            	collection:'',
+            	userLike:'',
+            	userChoose:''
+            	 },
+           	UserComment:
+           	{
+           		commentContext:''
+           	},
+           	curVideoPath:'',
+            currentClassComments:[],
+            ImgIputHandler:'',
+            comment:0,
+            cancel:1,
+        },
+
+        methods: {
+            commentfuc1(){
+                this.comment=1;
+            },
+            ChangeChoose(){
+            	if(this.emp.userChoose == '1')
+            	{
+            		Serv.operate
+            		(
+            			{
+            				url:'/CancelChooseClass.jsp',
+            			}
+            		);
+            		this.emp.userChoose = '0';
+            	}
+            	else
+            	{
+            		Serv.operate
+            		(
+            			{
+            				url:'/ChooseClass.jsp',
+            			}
+            		);
+            		this.emp.userChoose = '1';
+            	}
+            },
+            back() {
+                window.location.href = 'home.html';
+            },
+            cancel2(){
+                this.comment=0;
+            },
+            collect(){
+            	if(this.emp.collection == '1')
+            	{
+            		Serv.operate
+            		(
+            			{
+            				url:'/CancelCollectClass.jsp',
+            				data:this.emp
+            			}
+            		);
+            		this.emp.collection = '0';
+            	}
+            	else
+            	{
+            		Serv.operate
+            		(
+            			{
+            				url:'/CollectClass.jsp',
+            				data:this.emp
+            			}
+            		);
+            		this.emp.collection = '1';
+            	}
+            },
+            commentsub(){
+            	var temp = document.getElementById("content").value;
+            	if(temp == '')
+            	{
+            		return;
+            	}
+            	this.UserComment.commentContext = temp;
+            	Serv.operate
+            	(
+            		{
+            			url:'/PushComment.jsp',
+            			data:this.UserComment
+            		}
+            	);
+            	Serv.loadData									
+        		(												
+        			{											
+        				url:'/Comments.jsp' 					
+        			},											
+        			(data)=>									
+        			{											
+        				this.currentClassComments = data;
+        			}											
+        		);
+
+            	
+            },
+            cancelfuc(){
+                this.cancel=1;
+            },
+            ChooseUser(index)
+            {
+            	var temp = this.currentClassComments[index].userid.toString();
+            	this.emp.targetUserId = temp;
+            	Serv.operate
+            	(
+            		{
+            			url:'/ChooseUser.jsp',
+            			data:this.emp
+            		},
+            		()=>
+            		{
+            			window.location.href='TAhome.html';
+            		}
+            	);
+            },
+            ChangeLike()
+            {
+            	if(this.emp.userLike == '1')
+            	{
+            		Serv.operate
+            		(
+            			{
+            				url:'/UserDislike.jsp',
+            			}
+            		);
+            		this.emp.userLike = '0';
+            	}
+            	else
+            	{
+            		Serv.operate
+            		(
+            			{
+            				url:'/UserLike.jsp',
+            			}
+            		);
+            		this.emp.userLike = '1';
+            	}
+            }
+        },
+        mounted()
+        {
+        	Serv.loadData
+        	(
+        		{
+        			url:'/Comments.jsp'
+        		},
+        		(data)=>
+        		{
+        			this.currentClassComments = data;
+        		}
+        	);
+        	Serv.loadData
+        	(
+        		{
+        			url:'/IsCollected.jsp'
+        		},
+        		(data)=>
+        		{
+        			this.emp.collection = data;
+        		}
+        	);
+        	Serv.loadData
+        	(
+        		{
+        			url:'/IsUserLike.jsp'
+        		},
+        		(data)=>
+        		{
+        			this.emp.userLike = data;
+        		}
+        	);
+        	Serv.loadData
+        	(
+        		{
+        			url:'/IsUserChoose.jsp'
+        		},
+        		(data)=>
+        		{
+        			this.emp.userChoose = data;
+        		}
+        	);
+        	Serv.loadData
+        	(
+        		{        		
+        			url:'/GetCurrentClass.jsp'
+        		},
+        		(data)=>
+        		{
+        			var temp = eval(data);
+        			this.curVideoPath = temp[0].classvideopath;
+        		}
+        	);
+        	this.commentsub();
+        }
+    });
+
+//评论框
+
+</script>
+   
+
+</html>

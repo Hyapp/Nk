@@ -1,0 +1,128 @@
+<!-- html5 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!-- 页面显示适应移动设备-->
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+        <title>We Study</title>
+        <link rel="stylesheet" href="resources\we-vue\style.css">
+        <link rel="stylesheet" href="resources\css\font-awesome.min.css">  
+
+
+        <style>
+
+        .my-container{
+            width: 100%;
+            height: 100%;
+            background-color:rgb(245, 237, 163);
+        }
+
+        .my-image{
+            padding-top: 25px; 
+            padding-left: 25px;
+            text-align:left; 
+        }
+
+        /*元素选择器*/
+        
+        html{
+            height: 100%;
+        }
+
+        body{
+            height: 100%;
+            padding: 0px;/*内边距*/
+            margin: 0px;/*外边距*/
+        }
+       
+       
+        </style>
+    </head>
+
+
+     <body>
+         <!-- div:矩形区域 -->
+        <div id="changepwd" class="my-container">
+        
+            <!--标题-->
+            <wv-header  title="更改密码" :fixed="false" style="background-color:rgb(233, 176, 53);font-weight: bold;">
+                <div  slot="left">
+                    <img @click="back" src="../image/back.png" height="30" width="30" />
+                </div>
+            </wv-header>
+
+            <div style="margin-top: 50px; padding-left: 15px;padding-right: 15px;box-sizing: border-box;">
+            
+                <wv-group>
+                    <wv-input label="原密码" placeholder="请输入原密码" v-model="emp.e_pwd1"></wv-input>
+                </wv-group>
+                <wv-group>
+                    <wv-input label="新密码" placeholder="请输入新密码" type="password" v-model="emp.e_pwd2"></wv-input>
+                </wv-group>
+                <wv-group>
+                    <wv-input label="确认新密码" placeholder="请确认新密码" type="password" v-model="emp.e_pwd3"></wv-input>
+                </wv-group>
+            </div>
+            <div style="padding-left: 15px;padding-right: 15px;box-sizing: border-box;" >
+                    <wv-button type="primary" @click="saves" style="margin-top: 30px;background-color:rgb(243, 192, 97);">确认更改</wv-button>  
+            </div>
+    
+        </div>
+
+     </body>
+
+     <script src="resources\js\vue.min.js"></script>
+     <script src="resources\js\jquery.min.js"></script>
+     <script src="resources\we-vue\index.js"></script>
+     <script src="resources\layer_mobile\layer.js"></script>
+     <script src="resources\js\my.js"></script>
+<script>
+    //Vue对象的作用就是渲染界面,需要绑定一个元素
+    new Vue({
+        el: '#changepwd',
+        data:
+        {
+            emp: {
+                e_pwd1: '',
+                e_pwd2: '',
+                e_pwd3: '',
+            },
+        },
+
+        methods: {
+                back() {
+                    window.location.href = 'setup.html';
+                },
+                saves() {
+                    if(this.emp.e_pwd2 != this.emp.e_pwd3){
+                        TopTips('两次密码不一致，请重新输入！');
+                        return;
+                    }
+                    if(this.emp.e_pwd1 ==''){
+                        TopTips('请输入原密码');
+                        return;
+                    }
+                    if(this.emp.e_pwd2 ==''){
+                        TopTips('请输入新密码');
+                        return;
+                    }
+                    if(this.emp.e_pwd3 ==''){
+                        TopTips('请确认新密码');
+                        return;
+                    }
+                    Serv.operate
+                    (
+                    	{
+                    		url:'/changePassword.jsp',
+                    		data:this.emp
+                    	}
+                   	);
+                },
+            },
+
+        });
+</script>
+   
+
+</html>

@@ -1,0 +1,112 @@
+<!-- html5 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!-- 页面显示适应移动设备-->
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+        <title>We Study</title>
+        <link rel="stylesheet" href="resources\we-vue\style.css">
+        <link rel="stylesheet" href="resources\css\font-awesome.min.css">  
+        <meta http-equiv="refresh" content="2;url=html/login.html"> 
+
+
+        <style>
+        /*元素选择器*/
+        
+        html{
+            height: 100%;
+        }
+
+        body{
+            height: 100%;
+            padding: 0px;/*内边距*/
+            margin: 0px;/*外边距*/
+        }
+
+        /*类选择器*/
+        .my-container{
+            width: 100%;
+            height: 100%;
+            background-color:rgb(245, 237, 163);
+        }
+
+        .my-title1{
+            font-size: 60px;
+            font-family:"Times New Roman",Georgia,Serif;
+            text-align: center;/*水平居中*/
+            color:chocolate;
+            font-weight: bold;/*文字加粗*/
+            text-shadow: 2px 15px 10px rgb(236, 209, 121);
+            padding-top: 30px;
+            padding-bottom: 0px;
+        } 
+
+        .my-title2{
+            font-size: 45px;
+            font-family:"Times New Roman",Georgia,Serif;
+            text-align: center;/*水平居中*/
+            color:darkorange;
+            font-weight: bold;/*文字加粗*/
+            text-shadow: 2px 15px 10px rgb(236, 209, 121);
+            padding-top: 0px;
+            padding-bottom: 80px;
+        } 
+
+
+        .my-foot{
+            text-align: center;
+            color: #aaaaaa;
+            margin-top: 20px;
+        }
+
+        .my-image{
+            padding-top: 100px; 
+            text-align:center; 
+        }
+
+  
+       
+        </style>
+
+
+    </head>
+
+
+     <body>
+         <!-- div:矩形区域 -->
+         <div id="first" class="my-container">
+
+            <div class="my-image"><img src="image/logo.png" height="200" width="200" /> </div>
+
+            <div class="my-title1">We Study</div>
+            <div class="my-title2">MOOC</div>
+
+            <div class="my-foot">版权所有 &copy;BigBigBigQ</div>
+
+        </div>
+
+
+     </body>
+
+
+
+     <script src="resources\js\vue.min.js"></script>
+     <script src="resources\js\jquery.min.js"></script>
+     <script src="resources\we-vue\index.js"></script>
+     <script src="resources\layer_mobile\layer.js"></script>
+     <script src="resources\js\my.js"></script>
+
+     <script>
+         //Vue对象的作用就是渲染界面,需要绑定一个元素
+         new Vue({
+             el:'#first',
+             data:{},
+             methods:{
+             }
+         });
+
+     </script>
+
+
+</html>

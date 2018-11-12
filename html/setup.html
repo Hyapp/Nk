@@ -1,0 +1,185 @@
+<!-- html5 -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 页面显示适应移动设备-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title>We Study</title>
+    <link rel="stylesheet" href="resources\we-vue\style.css">
+    <link rel="stylesheet" href="resources\css\font-awesome.min.css">
+
+
+    <style>
+
+        .my-container{
+            width: 100%;
+            height: 100%;
+            background-color:rgb(245, 237, 163);
+        }
+
+        .my-image{
+            padding-top: 25px; 
+            padding-left: 25px;
+            text-align:left; 
+        }
+
+        /*元素选择器*/
+        
+        html{
+            height: 100%;
+        }
+
+        body{
+            height: 100%;
+            padding: 0px;/*内边距*/
+            margin: 0px;/*外边距*/
+        }
+       
+       
+        </style>
+</head>
+
+
+<body>
+    <!-- div:矩形区域 -->
+    <div id="setup" class="my-container">
+
+        <!--标题-->
+        <wv-header title="设置" :fixed="false" style="background-color:rgb(233, 176, 53);font-weight: bold;">
+            <div slot="left">
+                <img @click="back" src="../image/back.png" height="30" width="30" />
+            </div>
+            <div slot="right">
+                <img @click="saves" src="../image/save.png" height="30" width="30" />
+            </div>
+        </wv-header>
+
+        <div style="padding-left: 15px;padding-right: 15px;box-sizing: border-box;">
+            <div>
+                <wv-checklist id="sex" title="性别" :options="options" v-model="checkedItems" max="1"></wv-checklist>
+            </div>
+            <wv-group title="昵称">
+                <wv-input label="新昵称" v-model="newUserInfo.newNickName" placeholder="请输入新昵称"></wv-input>
+            </wv-group>
+            <wv-group title="个性签名">
+                <wv-textarea id="signature" v-model="newUserInfo.newSignature" placeholder="请输入文本" :rows="3" :max-length="100"></wv-textarea>
+            </wv-group>
+        </div>
+
+        <div style="padding-left: 15px;padding-right: 15px;box-sizing: border-box;">
+            <wv-button type="primary" @click="changepwd" style="margin-top: 30px;background-color:rgb(243, 192, 97);">
+                更改密码
+            </wv-button>
+            <wv-button type="primary" @click="outlogin" style="margin-top: 15px;background-color:rgb(243, 192, 97);">
+                退出登录
+            </wv-button>
+        </div>
+
+
+
+
+    </div>
+
+</body>
+
+<script src="resources\js\vue.min.js"></script>
+<script src="resources\js\jquery.min.js"></script>
+<script src="resources\we-vue\index.js"></script>
+<script src="resources\layer_mobile\layer.js"></script>
+<script src="resources\js\my.js"></script>
+
+<script>
+    //Vue对象的作用就是渲染界面,需要绑定一个元素
+    new Vue({
+        el: '#setup',
+        data:
+        {
+            checkup: 'false',
+            options: [
+                {
+                    label: '男同学',
+                    value: 1
+                },
+                {
+                    label: '女同学',
+                    value: 2,
+                },
+            ],
+            checkedItems: [],
+            newUserInfo:
+            {
+            	newNickName:'',
+            	newSignature:'',
+            	newSex:''
+            }
+        },
+
+        methods: {
+            back() {
+                window.location.href = 'myID.html';
+            },
+            saves() {
+            	if(this.checkedItems.length == 0)
+            	{
+            		this.newUserInfo.newSex = 0;
+            	}
+            	else
+            	{
+                	this.newUserInfo.newSex = this.checkedItems[0];
+            	}
+                Serv.operate
+                (
+                	{
+                		url:'/UpdateUserInfo.jsp',
+                		data:this.newUserInfo
+                	},
+                );
+            },
+
+            changepwd() {
+                window.location.href = 'changepwd.html';
+            },
+
+            outlogin() {
+                if (window.confirm("确认要退出吗？")) {
+                    window.location.href = 'login.html';
+                    return true;
+                }
+                else {
+                    return false;
+                }
+
+            },
+            update()
+            {
+
+            }
+
+        },
+        mounted() {
+       	    	Serv.loadData
+        		(
+        			{url:'/GetCurrentUserInfo.jsp'},
+        			(data)=>
+        			{
+        				var temp = eval(data);
+        				this.newUserInfo.newNickName = temp[0].username;
+        				this.newUserInfo.newSignature = temp[0].userpersoninfo;
+        				this.newUserInfo.newSex = temp[0].usersex;
+        				if(this.newUserInfo.newSex != 0)
+                		{
+                			Vue.set(this.checkedItems,0,this.newUserInfo.newSex);
+                		}
+        			}
+        		);
+
+        }
+
+
+    });
+</script>
+
+
+</html>

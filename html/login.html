@@ -1,0 +1,135 @@
+<!-- html5 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!-- 页面显示适应移动设备-->
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+        <title>We Study</title>
+        <link rel="stylesheet" href="resources\we-vue\style.css">
+        <link rel="stylesheet" href="resources\css\font-awesome.min.css">
+
+        <style>
+        /*元素选择器*/
+        
+        html{
+            height: 100%;
+        }
+
+        body{
+            height: 100%;
+            padding: 0px;/*内边距*/
+            margin: 0px;/*外边距*/
+        }
+        
+        /*类选择器*/
+        .my-container{
+            width: 100%;
+            height: 100%;
+            background-color:rgb(245, 237, 163);
+        }
+
+        .my-title{
+            font-size: 45px;
+            font-family:"Times New Roman",Georgia,Serif;
+            text-align: center;/*水平居中*/
+            color:chocolate;
+            font-weight: bold;/*文字加粗*/
+            text-shadow: 2px 15px 10px rgb(236, 209, 121);
+            padding-top: 7px;
+            padding-bottom: 30px;
+        } 
+
+        .my-image{
+            padding-top:80px; 
+            text-align:center; 
+        }
+  
+        </style>
+
+    </head>
+
+
+     <body>
+         <!-- div:矩形区域 -->
+         <div id="login" class="my-container">
+
+            <div class="my-image">
+                <img src="../image/logo.png" height="100" width="100" /> 
+            </div>
+           
+
+            <div class="my-title">We Study</div>
+
+          <div style="padding-left: 15px;padding-right: 15px;box-sizing: border-box;" >
+
+                <wv-group >
+                    <wv-input label="账号" placeholder="请输入账号" v-model="emp.e_id"></wv-input>
+                    <wv-input label="密码" placeholder="请输入密码" type="password" v-model="emp.e_pwd"></wv-input>
+                </wv-group>
+
+          <wv-button type="primary" @click=" login" style="margin-top: 30px;background-color:rgb(243, 192, 97);">登录</wv-button>
+          <wv-button type="primary" @click=" signup" style="margin-top: 10px;background-color:rgb(243, 192, 97);">注册</wv-button>
+          <wv-button type="primary" @click=" setServer" style="margin-top: 10px;background-color:rgb(243, 192, 97);">设置</wv-button>
+     
+          </div>
+
+         </div>
+    
+
+     </body>
+
+     <script src="resources\js\vue.min.js"></script>
+     <script src="resources\js\jquery.min.js"></script>
+     <script src="resources\we-vue\index.js"></script>
+     <script src="resources\layer_mobile\layer.js"></script>
+     <script src="resources\js\my.js"></script>
+
+     <script>
+         //Vue对象的作用就是渲染界面,需要绑定一个元素
+         new Vue({
+             el:'#login',
+             data:{
+                 emp:{
+                     e_id:'',
+                     e_pwd:'',
+                 }
+             },
+             methods:{
+                 login(){
+                     if(this.emp.e_id==''){
+                        // Toast.fail('请输入账号！');
+                        TopTips('请输入账号！');
+                        return;
+                     }
+                     if(this.emp.e_pwd==''){
+                        // Toast.fail('请输入密码！');
+                        TopTips('请输入密码！');
+                        return;
+                     }
+                     userId = this.emp.e_id;
+                     userPassword = this.emp.e_pwd;
+					 Serv.operate({
+						url:'/login.jsp',
+						data:this.emp},
+						()=>
+						{
+							window.location.href='home.html';
+						}
+					);
+                 },
+                 signup(){
+                    window.location.href='signup.html';
+                 },
+                 setServer()
+                 {
+                	window.location.href='set.html';
+                 }
+
+             }
+
+         });
+
+     </script>
+
+</html>

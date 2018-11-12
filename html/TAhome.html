@@ -1,0 +1,225 @@
+<!-- html5 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!-- 页面显示适应移动设备-->
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+        <title>We Study</title>
+        <link rel="stylesheet" href="resources\we-vue\style.css">
+        <link rel="stylesheet" href="resources\css\font-awesome.min.css">  
+
+
+        <style>
+        .my-container{
+            width: 100%;
+            height: 100%;
+            background-color:rgb(245, 237, 163);
+        }
+        .my-image{
+            float:left;
+            position:absolute;
+            margin-top:40px;
+            left:70px
+        }
+
+        .focus{
+            position:absolute;
+            margin-top: 40px;
+            left: 97px;
+        }
+
+        .shield{
+            position:absolute;
+            margin-top: 40px;
+            left: 239px;
+        }
+        .focus1{
+            position:absolute;
+            margin-top: 75px;
+            left: 97px;
+        }
+
+        .shield1{
+            position:absolute;
+            margin-top: 75px;
+            left: 239px;
+        }
+
+
+
+        /*元素选择器*/
+        html{
+            height: 100%;
+        }
+
+        body{
+            height: 100%;
+            padding: 0px;/*内边距*/
+            margin: 0px;/*外边距*/
+        }
+        </style>
+        
+        
+    </head>
+
+
+     <body>
+         <!-- 矩形区域 -->
+        <div id="TAhome" class="my-container">
+        
+            <!--标题-->
+            <wv-header title="TA的空间" :fixed="false" style="text-align:center;background-color:rgb(233, 176, 53);font-weight:bold;">
+                <div slot="left">
+                    <img @click="back" src="../image/back.png" height="30" width="30" />
+                </div>
+            </wv-header>
+
+            <div class="my-image" ><img src="../image/ID.png" height="60" width="60" /> </div>
+            <div style="margin-left:150px;margin-top:40px;font-size:20px;color:rgb(15, 14, 14)">
+                昵称：{{userName}}
+            </div>
+            <div style="margin-left:150px;font-size:20px;color:rgb(15, 14, 14)">
+                积分：{{userScore}}
+            </div>
+
+            <!--图标-->
+            <div class="focus">
+                <img @click="follow" src="../image/focus.png" height="30" width="35" />
+            </div>
+            <div class="shield">
+                <img @click="shield" height="30" width="35" />
+            </div>
+            <!--图标名称-->
+            <div class="focus1" >
+                <span>关注</span>
+            </div>
+            <div class="shield1" >
+                <span>屏蔽</span>
+            </div>
+
+            <wv-panel title="TA报名的课程" style="margin-top: 120px;background-color:rgb(245, 237, 163);">
+            	<wv-media-box v-for="(item, index) in userChoosingClasses" @click="ChooseClass(index)" v-bind:title="item.classname" v-bind:description="item.classteacher" ></wv-media-box>
+            </wv-panel>
+
+           
+
+        </div>
+
+     </body>
+
+     <script src="resources\js\vue.min.js"></script>
+     <script src="resources\js\jquery.min.js"></script>
+     <script src="resources\we-vue\index.js"></script>
+     <script src="resources\layer_mobile\layer.js"></script>
+     <script src="resources\js\my.js"></script>
+<script>
+    //Vue对象的作用就是渲染界面,需要绑定一个元素
+    new Vue({
+        el: '#TAhome',
+        data:
+        {
+        	userChoosingClasses:[],
+        	userName:'',
+        	userScore:'',
+        	userFollowState:'',
+        	emp:
+        	{
+        		classId:''
+        	}
+        },
+
+        methods: {
+            back() {
+                window.location.href = 'home.html';
+            },
+            follow(){
+            	if(this.userFollowState == '1')
+            	{
+            		Serv.operate
+            		(
+            			{
+            				url:'/CancelFollowUser.jsp',
+            			}
+            		);
+            		this.userFollowState = '0';
+            	}
+            	else
+            	{
+            		Serv.operate
+            		(
+            			{
+            				url:'/FollowUser.jsp',
+            			}
+            		);
+            		this.userFollowState = '1';
+            	}
+            },
+            shield(){
+                Toast.success('屏蔽成功！');
+            },
+            ChooseClass(index)
+            {
+            	var temp = this.userChoosingClasses[index].classid.toString();
+            	this.emp.classId = temp;
+            	Serv.operate
+            	(
+            		{
+            			url:'/ChoosingClass.jsp',
+            			data:this.emp
+            		},
+            		()=>
+            		{
+            			window.location.href = "video.html";
+            		}
+            	);
+            }
+
+        },
+        mounted()
+        {
+        	Serv.loadData
+        	(
+        		{
+        			url:'/GetUserInfo.jsp'
+        		},
+        		(data)=>
+        		{
+        			var result = eval(data);
+        			for(var j = 0;j<result.length;j++)
+        			{
+        				this.userName = result[j].username.toString();
+        				this.userScore = result[j].userscore.toString();
+  					}
+
+        		}
+        	);
+        	Serv.loadData
+        	(
+        		{
+        			url:'/TargetUserChoosingClasses.jsp'
+        		},
+        		(data)=>
+        		{
+        			this.userChoosingClasses = data;
+        		}
+        	);
+        	Serv.loadData
+        	(
+        		{
+        			url:'/IsFollow.jsp'
+        		},
+        		(data)=>
+        		{
+        			this.userFollowState = data;
+        		}
+        	);
+        }
+    });
+
+//评论框
+
+</script>
+   
+
+</html>

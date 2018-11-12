@@ -1,0 +1,122 @@
+<!-- html5 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!-- 页面显示适应移动设备-->
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+        <title>We Study</title>
+        <link rel="stylesheet" href="resources\we-vue\style.css">
+        <link rel="stylesheet" href="resources\css\font-awesome.min.css">  
+
+
+        <style>
+
+        .my-container{
+            width: 100%;
+            height: 100%;
+            background-color:rgb(245, 237, 163);
+        }
+
+        .my-image{
+            padding-top: 25px; 
+            padding-left: 25px;
+            text-align:left; 
+        }
+
+        /*元素选择器*/
+        
+        html{
+            height: 100%;
+        }
+
+        body{
+            height: 100%;
+            padding: 0px;/*内边距*/
+            margin: 0px;/*外边距*/
+        }
+       
+       
+        </style>
+    </head>
+
+
+     <body>
+         <!-- div:矩形区域 -->
+        <div id="fans" class="my-container">
+        
+            <!--标题-->
+            <wv-header  title="粉丝" :fixed="false" style="text-align:center;background-color:rgb(233, 176, 53);font-weight:bold;">
+                <div  slot="left">
+                    <img @click="back" src="../image/back.png" height="30" width="30" />
+                </div>
+            </wv-header>
+
+            <wv-panel title="粉丝列表" style="margin-top: 30px;margin-left: 10px;margin-right: 10px;">
+            	 <wv-media-box v-for="(item, index) in followedUsers" @click="ChooseUser(index)" v-bind:title="item.username" v-bind:description="item.userpersoninfo" ></wv-media-box>
+            </wv-panel>
+
+            
+
+        </div>
+
+     </body>
+
+     <script src="resources\js\vue.min.js"></script>
+     <script src="resources\js\jquery.min.js"></script>
+     <script src="resources\we-vue\index.js"></script>
+     <script src="resources\layer_mobile\layer.js"></script>
+     <script src="resources\js\my.js"></script>
+<script>
+    //Vue对象的作用就是渲染界面,需要绑定一个元素
+    new Vue({
+        el: '#fans',
+        data:
+        {
+        	followedUsers:[],
+        	emp:
+        	{
+        		targerUserId:''
+        	}
+        },
+
+        methods: {
+                back() {
+                    window.location.href = 'myID.html';
+                },
+                ChooseUser(index)
+                {
+                	var temp = this.followedUsers[index].userid.toString();
+                	this.emp.targetUserId = temp;
+                	Serv.operate
+                	(
+                		{
+                			url:'/ChooseUser.jsp',
+                			data:this.emp
+                		},
+                		()=>
+                		{
+                			window.location.href = "TAhome.html";
+                		}
+                	);
+                }
+            },
+        mounted()
+        {
+        	Serv.loadData
+        	(
+        		{
+        			url:'/GetFollowedUsers.jsp'
+        		},
+        		(data)=>
+        		{
+        			this.followedUsers = data;
+        		}
+        	);
+        }
+
+        });
+</script>
+   
+
+</html>

@@ -1,0 +1,117 @@
+<!-- html5 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!-- 页面显示适应移动设备-->
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+        <title>We Study</title>
+        <link rel="stylesheet" href="resources\we-vue\style.css">
+        <link rel="stylesheet" href="resources\css\font-awesome.min.css">  
+
+
+        <style>
+
+        .my-container{
+            width: 100%;
+            height: 100%;
+            background-color:rgb(245, 237, 163);
+        }
+
+        .my-image{
+            padding-top: 25px; 
+            padding-left: 25px;
+            text-align:left; 
+        }
+
+        .helptxt{
+            margin-top: 80px;
+            color: coral;
+            font-weight: bold;
+            text-align:center;
+            padding-left: 25px;
+            padding-right: 25px;
+            font-size: 19px;
+            font-family:"微软雅黑",Georgia,Serif;
+        }
+
+        .my-image{
+            padding-top:10px; 
+            margin-left: 20px;
+            text-align:left; 
+        }
+
+        /*元素选择器*/
+        
+        html{
+            height: 100%;
+        }
+
+        body{
+            height: 100%;
+            padding: 0px;/*内边距*/
+            margin: 0px;/*外边距*/
+        }
+
+       
+        </style>
+    </head>
+
+
+     <body>
+         <!-- div:矩形区域 -->
+        <div id="introduce" class="my-container">
+        
+            <!--标题-->
+            <wv-header  title="介绍" :fixed="false" style="text-align:center;background-color:rgb(233, 176, 53);font-weight:bold;">
+                <div  slot="left">
+                    <img @click="back" src="../image/back.png" height="30" width="30" />
+                </div>
+            </wv-header>
+
+            <div class="helptxt" white-space="pre">
+                这是一个少女感爆棚的APP<br/>
+                这是一个钢铁直男 <br/>
+                一个塑料直男<br/>
+                一个美少女的团队<br/>
+                这是一个相互交流学习的平台<br/>
+                希望大家能从中学到自己需要的知识<br/><br/>
+                组长：李倩 <br/>组员：黎弘毅、高代桂<br/><br/>
+            </div>
+
+            <div class="my-image">
+                    <img src="../image/teacher.png" height="143" width="73.5" /> 
+            </div>
+
+        </div>
+
+     </body>
+
+     <script src="resources\js\vue.min.js"></script>
+     <script src="resources\js\jquery.min.js"></script>
+     <script src="resources\we-vue\index.js"></script>
+     <script src="resources\layer_mobile\layer.js"></script>
+     <script src="resources\js\my.js"></script>
+<script>
+    //Vue对象的作用就是渲染界面,需要绑定一个元素
+    new Vue({
+        el: '#introduce',
+        data:
+        {
+            emp: {
+                e_pwd1: '',
+                e_pwd2: '',
+                e_pwd3: '',
+            },
+        },
+
+        methods: {
+                back() {
+                    window.location.href = 'myID.html';
+                }, 
+            },
+        });
+</script>
+   
+
+</html>
