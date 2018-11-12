@@ -7,8 +7,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
         <title>We Study</title>
         <link rel="stylesheet" href="resources\we-vue\style.css">
-        <link rel="stylesheet" href="resources\css\font-awesome.min.css">  
-        <meta http-equiv="refresh" content="2;url=html/login.html"> 
+        <link rel="stylesheet" href="resources\css\font-awesome.min.css">
 
 
         <style>
@@ -77,7 +76,7 @@
          <!-- div:矩形区域 -->
          <div id="first" class="my-container">
 
-            <div class="my-image"><img src="image/logo.png" height="200" width="200" /> </div>
+            <div class="my-image"><img src="../image/logo.png" height="200" width="200" /> </div>
 
             <div class="my-title1">We Study</div>
             <div class="my-title2">MOOC</div>
@@ -103,6 +102,10 @@
              el:'#first',
              data:{},
              methods:{
+             },
+             mounted()
+             {
+             	setTimeout("window.location.href = 'login.html';",2000);
              }
          });
 
