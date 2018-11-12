@@ -49,7 +49,7 @@
             <wv-header title="账号" :fixed="false" style="background-color:rgb(233, 176, 53);font-weight: bold;">
             </wv-header>
 
-            <div class="my-image"><img src="../image/ID.png" height="60" width="60" /> </div>
+            <div class="my-image"><img src="ID.png" height="60" width="60" /> </div>
             <div style="margin-left:100px;margin-top:40px;font-size:20px;color:rgb(15, 14, 14)">
                 账号：{{currentUserId}}
             </div>
@@ -59,27 +59,27 @@
             
             <wv-grid style="margin-top:50px">
                 <wv-grid-item @click="focus">
-                    <img src="../image/focus.png" slot="icon">
+                    <img src="focus.png" slot="icon">
                     <span slot="label">关注 </span>
                 </wv-grid-item>
             
                 <wv-grid-item @click="fans">
-                    <img src="../image/fans.png" slot="icon">
+                    <img src="fans.png" slot="icon">
                     <span slot="label">粉丝</span>
                 </wv-grid-item>
 
                 <wv-grid-item @click="message">
-                    <img src="../image/message.png" slot="icon">
+                    <img src="message.png" slot="icon">
                     <span slot="label">消息</span>
                 </wv-grid-item>
                 
                 <wv-grid-item @click="setup">
-                    <img src="../image/setup.png" slot="icon">
+                    <img src="setup.png" slot="icon">
                     <span slot="label">设置</span>
                 </wv-grid-item>
 
                 <wv-grid-item @click="introduce">
-                    <img src="../image/introduce.png" slot="icon">
+                    <img src="introduce.png" slot="icon">
                     <span slot="label">介绍</span>
                 </wv-grid-item>
             </wv-grid>
@@ -89,20 +89,20 @@
             <wv-tabbar style="background-color:rgb(233, 176, 53);">
                 <wv-tabbar-item  @click="active1":is-on="active==1" >
                     <span slot="icon">
-                        <img class="weui-tabbar__icon" src="../image/home.png" slot="icon">
+                        <img class="weui-tabbar__icon" src="home.png" slot="icon">
                     </span>
                     首页
                 </wv-tabbar-item>
         
                 <wv-tabbar-item @click="active2":is-on="active==2" >
                     <span slot="icon">
-                        <img class="weui-tabbar__icon" src="../image/myclass.png" slot="icon">
+                        <img class="weui-tabbar__icon" src="myclass.png" slot="icon">
                     </span>
                     我的课程
                 </wv-tabbar-item>
         
                 <wv-tabbar-item @click="active3":is-on="active==3" >
-                    <img class="weui-tabbar__icon" src="../image/myID.png" slot="icon"> 账号
+                    <img class="weui-tabbar__icon" src="myID.png" slot="icon"> 账号
                 </wv-tabbar-item>
             </wv-tabbar>
         </div>
