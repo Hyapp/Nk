@@ -1,0 +1,171 @@
+<!-- html5 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!-- 页面显示适应移动设备-->
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+        <title>We Study</title>
+        <link rel="stylesheet" href="resources\we-vue\style.css">
+        <link rel="stylesheet" href="resources\css\font-awesome.min.css">  
+
+
+        <style>
+
+        .my-container{
+            width: 100%;
+            height: 100%;
+            background-color:rgb(245, 237, 163);
+        }
+        /*元素选择器*/
+        
+        html{
+            height: 100%;
+        }
+
+        body{
+            height: 100%;
+            padding: 0px;/*内边距*/
+            margin: 0px;/*外边距*/
+        }
+       
+       
+        </style>
+    </head>
+
+
+     <body>
+         <!-- div:矩形区域 -->
+        <div id="myclass" class="my-container">
+        
+            <!--标题-->
+            <wv-header title="我的课程" :fixed="false" style="background-color:rgb(233, 176, 53);font-weight: bold;">
+            </wv-header>
+
+            <!--上方选择条-->
+            <wv-tabs>
+                <wv-tab v-for="index in 1" :title="'收藏'">
+                    <wv-panel style="background-color:rgb(245, 237, 163);">
+                    	<wv-media-box v-for="(item, index) in MyCollectedClasses" @click="ChooseCollectedClass(index)" v-bind:thumb="item.classpicturepath" v-bind:title="item.classname" v-bind:description="item.classteacher" ></wv-media-box>
+                    </wv-panel>
+                </wv-tab>
+            
+                <wv-tab v-for="index in 1" :title="'已报名'">
+                    <wv-panel style="background-color:rgb(245, 237, 163);">
+                    	<wv-media-box v-for="(item, index) in MyClasses" @click="ChooseMyClass(index)" v-bind:thumb="item.classpicturepath" v-bind:title="item.classname" v-bind:description="item.classteacher" ></wv-media-box>
+                    </wv-panel>
+                </wv-tab>
+            </wv-tabs>
+
+            <!--下方选择条-->
+            <wv-tabbar style="background-color:rgb(233, 176, 53);">
+                <wv-tabbar-item  @click="active1":is-on="active==1" >
+                    <span slot="icon">
+                        <img class="weui-tabbar__icon" src="home.png" slot="icon">
+                    </span>
+                    首页
+                </wv-tabbar-item>
+        
+                <wv-tabbar-item @click="active2":is-on="active==2" >
+                    <span slot="icon">
+                        <img class="weui-tabbar__icon" src="myclass.png" slot="icon">
+                    </span>
+                    我的课程
+                </wv-tabbar-item>
+        
+                <wv-tabbar-item @click="active3":is-on="active==3" >
+                    <img class="weui-tabbar__icon" src="myID.png" slot="icon"> 账号
+                </wv-tabbar-item>
+            </wv-tabbar>
+        </div>
+
+     </body>
+
+     <script src="resources\js\vue.min.js"></script>
+     <script src="resources\js\jquery.min.js"></script>
+     <script src="resources\we-vue\index.js"></script>
+     <script src="resources\layer_mobile\layer.js"></script>
+     <script src="resources\js\my.js"></script>
+
+     <script>
+           //Vue对象的作用就是渲染界面,需要绑定一个元素
+           new Vue({
+                el:'#myclass',
+                data:{
+                    active:"",
+                    MyClasses:[],
+                    MyCollectedClasses:[],
+                    emp:
+                    {
+                    	classId:''
+                    }
+                },
+                methods:{
+                    active1(){
+                        active=1;
+                        window.location.href='home.html';
+                    },
+                    active2(){
+                        active=2;
+                        window.location.href='myclass.html';
+                    },
+                    active3(){
+                        active=3;
+                        window.location.href='myID.html';
+                    },
+                    ChooseCollectedClass:function(index)
+                    {
+                    	var t = this.MyCollectedClasses[index].classid.toString();
+                    	this.emp.classId = t;
+                    	Serv.operate(
+                    				{
+                    					url:"/ChoosingClass.jsp",
+                    					data:this.emp
+                    				},
+                    				()=>
+                    				{
+                    					window.location.href='video.html';
+                    				}
+                    				);
+                    },
+                    ChooseMyClass:function(index)
+                    {
+                    	var t = this.MyClasses[index].classid.toString();
+                    	this.emp.classId = t;
+                    	Serv.operate(
+                    				{
+                    					url:"/ChoosingClass.jsp",
+                    					data:this.emp
+                    				},
+                    				()=>
+                    				{
+                    					window.location.href='video.html';
+                    				}
+                    				);
+                    }
+                   
+                   
+                },
+                mounted()
+            	{
+            		Serv.loadData(
+                	{url:'/MyClasses.jsp'},
+                	(data)=>
+                	{
+                		this.MyClasses = data;
+                	}
+                	);
+                	Serv.loadData(
+                	{url:'/MyCollection.jsp'},
+                	(data)=>
+                	{
+                		this.MyCollectedClasses = data;
+                	}
+                	);
+            	}
+           });
+   
+     </script>
+   
+
+</html>
